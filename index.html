@@ -89,12 +89,14 @@ img,.ph{-webkit-user-drag:none;pointer-events:auto}
 .grph > span:last-child{font:500 11.5px/1.5 var(--mono);color:var(--muted)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:clip;content-visibility:auto;contain-intrinsic-size:auto 420px}
 .row + .row{border-top:1px solid var(--line)}
-.row summary{display:grid;grid-template-columns:46px minmax(0,1.6fr) minmax(0,.9fr) 170px 34px;grid-template-areas:"ph main chars price add";gap:4px 12px;align-items:center;
+.row summary{display:grid;grid-template-columns:86px 60px minmax(0,1.6fr) minmax(0,.9fr) 170px 34px;grid-template-areas:"cd ph main chars price add";gap:4px 12px;align-items:center;
   padding:6px 10px 6px 12px;cursor:pointer;list-style:none}
 .row summary::-webkit-details-marker{display:none}
 .row summary:hover{background:color-mix(in srgb,var(--soft) 55%,var(--surface))}
 .row[open] > summary{background:var(--soft)}
-.ph{grid-area:ph;--s:46px;width:var(--s);height:var(--s);border-radius:9px;display:block;background-color:#fff;background-repeat:no-repeat;
+.cd{grid-area:cd;font:700 15px/1.2 var(--mono);color:var(--ink);letter-spacing:-.02em;white-space:nowrap}
+.row.np .cd{color:var(--muted)}
+.ph{grid-area:ph;--s:60px;width:var(--s);height:var(--s);border-radius:9px;display:block;background-color:#fff;background-repeat:no-repeat;
   background-size:calc(24 * var(--s)) auto;background-position:calc(var(--x,0) * -1 * var(--s)) calc(var(--y,0) * -1 * var(--s));box-shadow:inset 0 0 0 1px var(--line)}
 .main{grid-area:main;min-width:0}
 .name{display:block;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
@@ -119,8 +121,8 @@ img,.ph{-webkit-user-drag:none;pointer-events:auto}
 .add:hover{border-color:var(--accent)}
 .add.in{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font:700 11.5px/1 var(--mono)}
 
-body.compact .row summary{grid-template-columns:28px minmax(0,2fr) minmax(0,.8fr) 150px 28px;padding:3px 8px 3px 10px;gap:0 10px}
-body.compact .ph{--s:28px;border-radius:6px}
+body.compact .row summary{grid-template-columns:74px 28px minmax(0,2fr) minmax(0,.8fr) 150px 28px;padding:3px 8px 3px 10px;gap:0 10px}
+body.compact .ph{--s:28px;border-radius:6px} body.compact .cd{font-size:13px}
 body.compact .main{display:flex;gap:10px;align-items:center}
 body.compact .meta{order:-1;flex:none;flex-wrap:nowrap;width:150px;margin:0;overflow:hidden}
 body.compact .meta .t{display:none}
@@ -130,7 +132,7 @@ body.compact .price b{font-size:14px}
 body.compact .price small{display:none}
 body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
 
-.more{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px 30px;padding:12px 14px 16px 70px;background:var(--soft);border-top:1px solid var(--line);font-size:13px}
+.more{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px 30px;padding:12px 14px 16px 182px;background:var(--soft);border-top:1px solid var(--line);font-size:13px}
 .more h3{margin:0 0 5px;font-weight:600;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .more > div{min-width:0;display:grid;gap:14px;align-content:start}
 .vtw{overflow-x:auto}
@@ -200,8 +202,8 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
   .rmgrid button,.chip2,.sep{flex:none}
   #hint:not(.f){display:none}
   .tools h1{font-size:22px}
-  .row summary,body.compact .row summary{grid-template-columns:42px minmax(0,1fr) auto 30px;grid-template-areas:"ph main price add" "ph chars chars chars";padding:8px 10px;gap:3px 10px}
-  .ph,body.compact .ph{--s:42px} .price b{font-size:15px}
+  .row summary,body.compact .row summary{grid-template-columns:56px minmax(0,1fr) auto 30px;grid-template-areas:"ph cd price add" "ph main main main" "ph chars chars chars";padding:8px 10px;gap:3px 10px}
+  .ph,body.compact .ph{--s:56px;align-self:start} .cd,body.compact .cd{font-size:15px} .price b{font-size:15px}
   body.compact .main{display:block} body.compact .meta{width:auto;flex-wrap:wrap} body.compact .name{white-space:normal}
   .more{grid-template-columns:minmax(0,1fr);padding:12px}
 }
@@ -339,12 +341,12 @@ const avail = it => it.st == null ? '' : `<span class="av s${it.st}">${T('st')[i
 function row(it){
   const v = prim(it), has = !!v.r, rm = it.rm || [];
   const tags = (it.tags || []).slice(0, 2).map(esc).join(' · ');
-  const meta = `<code>${esc(it.c)}</code>${avail(it)}${tags ? `<span class="t">${tags}</span>` : ''}`;
+  const meta = `${avail(it)}${tags ? `<span class="t">${tags}</span>` : ''}`;
   const chars = rm.slice(0, 3).map(k => `<span class="pill" style="--h:${RM[k]}">${T('rm')[k].toLowerCase()}</span>`).join('') + (rm.length > 3 ? `<span class="more-n">+${rm.length - 3}</span>` : '');
   const sub = it.v.length > 1 || it.t === 1 ? `${T('per')} ${esc(v.l || T('unit1'))}` : '';
   const price = has ? `<b>${money(v.r)}</b>${sub ? `<small>${sub}</small>` : ''}` : `<span class="noprice">${T('ask')}</span>`;
   const q = qtyIn(it);
-  return `<details class="row${has ? '' : ' np'}" id="i${it._i}"><summary><span class="ph${it.si != null ? ' sp' + it.t : ''}"${it.si != null ? ` style="--x:${it.si % 24};--y:${Math.floor(it.si / 24)}"` : ''}></span>`
+  return `<details class="row${has ? '' : ' np'}" id="i${it._i}"><summary><span class="cd">${esc(it.c)}</span><span class="ph${it.si != null ? ' sp' + it.t : ''}"${it.si != null ? ` style="--x:${it.si % 24};--y:${Math.floor(it.si / 24)}"` : ''}></span>`
     + `<span class="main"><span class="name">${esc(it.n)}</span><span class="meta">${meta}</span></span><span class="chars">${chars}</span>`
     + `<span class="price">${price}</span><button type="button" class="add${q ? ' in' : ''}" data-add="${it._i}" title="${T('add')}" aria-label="${T('add')}">${q || '+'}</button></summary><div class="more"></div></details>`;
 }
