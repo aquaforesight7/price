@@ -314,8 +314,9 @@ const nf = n => Math.round(n).toLocaleString('uk-UA');
 const money = p => p ? nf(p) + ' ₴' : '—';
 let saved = null;
 try { saved = JSON.parse(localStorage.getItem('af-catalog') || 'null'); } catch (e) {}
-if (saved) { for (const k of ['lang','compact','order','form']) if (k in saved) st[k] = saved[k]; }
-else { const nl = (navigator.language || '').slice(0, 2); if (nl === 'ru') st.lang = 'ru'; else if (nl === 'en') st.lang = 'en'; }
+if (saved) { for (const k of ['compact','order','form']) if (k in saved) st[k] = saved[k]; }
+st.lang = 'uk';
+{ const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ru' || ql === 'en') st.lang = ql; }
 const save = () => { try { localStorage.setItem('af-catalog', JSON.stringify({lang:st.lang, compact:st.compact, order:st.order, form:st.form})); } catch (e) {} };
 
 let DATA = [], META = {}, BYCODE = new Map(), SECS = [];
