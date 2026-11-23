@@ -214,6 +214,7 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
   .cart b.cn{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--accent-ink);color:var(--accent);font-size:12px}
 }
 @media (max-width: 360px){ .cart .cl{display:none} .cart::before{content:"🛒";font-size:15px} }
+.sortl{gap:6px}.sortl select{border:0;background:none;font:inherit;font-weight:600;color:var(--ink);padding:0 2px;cursor:pointer}
 .secbtn,.rmbtn{display:none}
 .sheet,.sheetbg{display:none}
 @media (max-width: 760px){
@@ -297,7 +298,7 @@ const SECT = {
  19:['Комплектуючі до осмосу','Комплектующие для осмоса','Reverse osmosis parts'],20:['УФ-стерилізація та озонування','УФ-стерилизация и озонирование','UV sterilisation and ozonation'],21:['Механічна очистка води','Механическая очистка воды','Mechanical filtration'],
  23:['Станції дозування і ємності','Станции дозирования и ёмкости','Dosing stations and tanks'],24:['Хімічні реагенти','Химические реагенты','Water treatment chemicals'],25:['Помпи для бутильованої води','Помпы для бутилированной воды','Bottled water pumps']};
 const L = {
- uk:{title:'Каталог і ціни',ph:'Назва, код або артикул',order:'Мій список',task:'Що прибрати з води',contact_s:'Звʼязатися',
+ uk:{title:'Каталог і ціни',ph:'Назва, код або артикул',order:'Мій список',task:'Що прибрати з води',sort:'Сортування',s_def:'за розділами',s_pu:'ціна ↑ дешевші',s_pd:'ціна ↓ дорожчі',s_c:'за кодом',s_n:'за назвою',contact_s:'Звʼязатися',
   rm:['Жорсткість','Залізо','Марганець','Органіка, колір','Амоній','Нітрати','Сірководень','Хлор','Каламутність','Корекція pH','Солі','Бактерії'],
   items:'товарів',sections:'Розділи',updated:'ціни оновлено',shown:'показано',f_stock:'є в наявності',f_priced:'лише з ціною',compact:'компактно',
   hint0:'Оберіть одну чи кілька задач: залишаться товари, які закривають усі.',hint1:'Знайдено:',reset:'Скинути фільтри',
@@ -311,7 +312,7 @@ const L = {
   o_copied:'Відкриваємо чат. Якщо поле повідомлення порожнє, натисніть «Вставити» й надішліть.',o_open:'Відкрити контакти',o_manual:'Скопіюйте текст і надішліть нам:',
   o_need:'Вкажіть імʼя і телефон',o_viber:'Замовлення скопійоване. На сторінці контактів натисніть Viber, а в чаті — «Вставити» й надішліть.',o_clear:'Очистити',o_hdr:'Замовлення з каталогу Аква Форсайт',
   foot:'Ціни в гривнях, оновлюються щодня. Наявність і підсумкову вартість підтверджує менеджер.',lang_note:'Назви товарів подано українською.'},
- ru:{title:'Каталог и цены',ph:'Название, код или артикул',order:'Мой список',task:'Что убрать из воды',contact_s:'Связаться',
+ ru:{title:'Каталог и цены',ph:'Название, код или артикул',order:'Мой список',task:'Что убрать из воды',sort:'Сортировка',s_def:'по разделам',s_pu:'цена ↑ дешевле',s_pd:'цена ↓ дороже',s_c:'по коду',s_n:'по названию',contact_s:'Связаться',
   rm:['Жёсткость','Железо','Марганец','Органика, цвет','Аммоний','Нитраты','Сероводород','Хлор','Мутность','Коррекция pH','Соли','Бактерии'],
   items:'товаров',sections:'Разделы',updated:'цены обновлены',shown:'показано',f_stock:'есть в наличии',f_priced:'только с ценой',compact:'компактно',
   hint0:'Выберите одну или несколько задач: останутся товары, которые закрывают все.',hint1:'Найдено:',reset:'Сбросить фильтры',
@@ -326,7 +327,7 @@ const L = {
   o_copied:'Открываем чат. Если поле сообщения пустое, нажмите «Вставить» и отправьте.',o_open:'Открыть контакты',o_manual:'Скопируйте текст и отправьте нам:',
   o_need:'Укажите имя и телефон',o_viber:'Заказ скопирован. На странице контактов нажмите Viber, а в чате — «Вставить» и отправьте.',o_clear:'Очистить',o_hdr:'Заказ из каталога Аква Форсайт',
   foot:'Цены в гривнах, обновляются ежедневно. Наличие и итоговую стоимость подтверждает менеджер.',lang_note:'Названия товаров указаны на украинском.'},
- en:{title:'Catalogue and prices',ph:'Name, code or part number',order:'My list',task:'What to remove from water',contact_s:'Contact us',
+ en:{title:'Catalogue and prices',ph:'Name, code or part number',order:'My list',task:'What to remove from water',sort:'Sort',s_def:'by section',s_pu:'price ↑ low first',s_pd:'price ↓ high first',s_c:'by code',s_n:'by name',contact_s:'Contact us',
   rm:['Hardness','Iron','Manganese','Organics, colour','Ammonium','Nitrates','Hydrogen sulfide','Chlorine','Turbidity','pH correction','Dissolved salts','Bacteria'],
   items:'products',sections:'Sections',updated:'prices updated',shown:'shown',f_stock:'in stock',f_priced:'with price only',compact:'compact',
   hint0:'Pick one or more problems: only products that solve all of them stay.',hint1:'Found:',reset:'Clear filters',
@@ -343,7 +344,7 @@ const L = {
   foot:'Prices in hryvnias, updated daily. A manager confirms availability and the final price.',lang_note:'Product names are given in Ukrainian.'}
 };
 const LI = {uk:0, ru:1, en:2};
-const st = {q:'', lang:'uk', compact:false, priced:false, stock:false, rm:new Set(), order:[], form:{n:'',p:'',c:'',pay:0,m:''}, active:null};
+const st = {q:'', lang:'uk', compact:false, priced:false, stock:false, rm:new Set(), order:[], form:{n:'',p:'',c:'',pay:0,m:''}, active:null, sort:''};
 const $ = id => document.getElementById(id);
 const T = k => L[st.lang][k];
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -354,12 +355,13 @@ try { saved = JSON.parse(localStorage.getItem('af-catalog') || 'null'); } catch 
 if (saved) { for (const k of ['compact','order','form']) if (k in saved) st[k] = saved[k]; }
 st.lang = 'uk';
 { const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ru' || ql === 'en') st.lang = ql; }
-const save = () => { try { localStorage.setItem('af-catalog', JSON.stringify({lang:st.lang, compact:st.compact, order:st.order, form:st.form})); } catch (e) {} };
+const save = () => { try { localStorage.setItem('af-catalog', JSON.stringify({lang:st.lang, compact:st.compact, sort:st.sort, order:st.order, form:st.form})); } catch (e) {} };
 
 let DATA = [], META = {}, BYCODE = new Map(), SECS = [];
 const prim = it => it.v[it.p];
 const hasPrice = it => !!prim(it).r;
 const secTitle = s => (SECT[s] || [META.titles?.[s] || String(s)])[LI[st.lang]] || SECT[s]?.[0];
+const NM = it => st.lang === 'ru' && it.nr ? it.nr : it.n;
 const siteUrl = u => !u ? '' : st.lang === 'uk' ? u.replace(/^(https:\/\/aquaforesight\.com\.ua)(\/(?!ua\/))/, '$1/ua$2') : u.replace('/ua/', '/');
 
 function match(it){
@@ -381,7 +383,7 @@ function row(it){
   const price = has ? `<b>${money(v.r)}</b>${sub ? `<small>${sub}</small>` : ''}` : `<span class="noprice">${T('ask')}</span>`;
   const q = qtyIn(it);
   return `<details class="row${has ? '' : ' np'}" id="i${it._i}"><summary><span class="cd">${esc(it.c)}</span><span class="ph${it.si != null ? ' sp' + it.t : ''}"${it.si != null ? ` style="--x:${it.si % 24};--y:${Math.floor(it.si / 24)}"` : ''}></span>`
-    + `<span class="main"><span class="name">${esc(it.n)}</span><span class="meta">${meta}</span></span><span class="chars">${chars}</span>`
+    + `<span class="main"><span class="name">${esc(NM(it))}</span><span class="meta">${meta}</span></span><span class="chars">${chars}</span>`
     + `<span class="price">${price}</span><button type="button" class="add${q ? ' in' : ''}" data-add="${it._i}" title="${T('add')}" aria-label="${T('add')}">${q || '+'}</button></summary><div class="more"></div></details>`;
 }
 
@@ -393,7 +395,7 @@ function details(it){
     it.rm && it.rm.length && [T('removes'), it.rm.map(k => T('rm')[k].toLowerCase()).join(', ')], params && [T('params'), params],
     it.res && [T('res'), nf(it.res) + ' л'], it.note && [T('purpose'), esc(it.note)]].filter(Boolean).map(f => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('');
   const alts = (it.alt || []).map(code => BYCODE.get(code)).filter(Boolean)
-    .map(a => `<button type="button" data-go="${a._i}">${esc(a.n)}<br><b>${prim(a).r ? money(prim(a).r) : T('ask')}</b></button>`).join('');
+    .map(a => `<button type="button" data-go="${a._i}">${esc(NM(a))}<br><b>${prim(a).r ? money(prim(a).r) : T('ask')}</b></button>`).join('');
   const url = siteUrl(it.u);
   return `<div><div class="vtw"><table class="vt"><thead><tr><th>${T('pack')}</th><th>${T('price')}</th><th></th></tr></thead><tbody>${vt}</tbody></table></div>`
     + (comp ? `<div><h3>${T('comp')}</h3><div class="vtw"><table class="vt"><thead><tr><th></th><th>${T('qty')}</th></tr></thead><tbody>${comp}</tbody></table></div></div>` : '')
@@ -404,6 +406,15 @@ function details(it){
 }
 
 let shown = [];
+const PR = it => prim(it).r || 0;
+function sortBuf(b){
+  const k = st.sort; if (!k) return b; const a = b.slice();
+  if (k === 'p+') a.sort((x, y) => (PR(x) || Infinity) - (PR(y) || Infinity));
+  else if (k === 'p-') a.sort((x, y) => PR(y) - PR(x));
+  else if (k === 'c') a.sort((x, y) => x.c.localeCompare(y.c, 'uk', {numeric:true}));
+  else if (k === 'n') a.sort((x, y) => NM(x).localeCompare(NM(y), st.lang === 'en' ? 'uk' : st.lang, {numeric:true, sensitivity:'base'}));
+  return a;
+}
 function render(){
   shown = DATA.filter(match);
   const filtered = shown.length !== DATA.length;
@@ -413,7 +424,7 @@ function render(){
     if (!items.length) continue;
     html += `<div class="sech" id="s${s}" data-s="${s}"><h2>${esc(secTitle(s))}</h2><span>${items.length}</span></div>`;
     let g = null, buf = [], gi = 0;
-    const flush = () => { if (buf.length){ html += `<div class="grph" id="g${s}-${gi}"><span>${g.g0 ? `<small>${esc(g.g0)} · </small>` : ''}${esc(g.g || secTitle(s))}</span><span>${buf.length}</span></div><div class="card">${buf.map(row).join('')}</div>`; gi++; } };
+    const flush = () => { if (buf.length){ html += `<div class="grph" id="g${s}-${gi}"><span>${g.g0 ? `<small>${esc(g.g0)} · </small>` : ''}${esc(g.g || secTitle(s))}</span><span>${buf.length}</span></div><div class="card">${sortBuf(buf).map(row).join('')}</div>`; gi++; } };
     for (const it of items){ if (!g || g.g !== it.g || g.g0 !== it.g0){ flush(); g = it; buf = []; } buf.push(it); }
     flush();
   }
@@ -459,8 +470,9 @@ function chrome(){
   document.querySelectorAll('[data-seg="lang"] button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === st.lang));
   $('rm').innerHTML = T('rm').map((n, k) => `<button type="button" data-rm="${k}" aria-pressed="${st.rm.has(k)}" style="--h:${RM[k]}">${n}</button>`).join(''); rmBtn();
   $('chips').innerHTML = `<button type="button" class="chip2" data-f="stock" aria-pressed="${st.stock}">${T('f_stock')}</button><button type="button" class="chip2" data-f="priced" aria-pressed="${st.priced}">${T('f_priced')}</button>`
-    + `<span class="sep"></span><button type="button" class="chip2" data-f="compact" aria-pressed="${st.compact}">${T('compact')}</button>`;
-  $('foot').innerHTML = `${T('foot')}${st.lang !== 'uk' ? ' ' + T('lang_note') : ''} Аква Форсайт: ${PHONE} · <a href="${LINK}" target="_blank" rel="noopener">${T('contact_s')}</a> · <a href="https://aquaforesight.com.ua/${st.lang === 'uk' ? 'ua/' : ''}" target="_blank" rel="noopener">aquaforesight.com.ua</a>`;
+    + `<span class="sep"></span><button type="button" class="chip2" data-f="compact" aria-pressed="${st.compact}">${T('compact')}</button>`
+    + `<label class="chip2 sortl">${T('sort')}: <select id="sort">${[['', T('s_def')], ['p+', T('s_pu')], ['p-', T('s_pd')], ['c', T('s_c')], ['n', T('s_n')]].map(([v, n]) => `<option value="${v}"${st.sort === v ? ' selected' : ''}>${n}</option>`).join('')}</select></label>`;
+  $('foot').innerHTML = `${T('foot')}${st.lang === 'en' ? ' ' + T('lang_note') : ''} Аква Форсайт: ${PHONE} · <a href="${LINK}" target="_blank" rel="noopener">${T('contact_s')}</a> · <a href="https://aquaforesight.com.ua/${st.lang === 'uk' ? 'ua/' : ''}" target="_blank" rel="noopener">aquaforesight.com.ua</a>`;
   cartBtn();
 }
 
@@ -483,7 +495,7 @@ function refreshAdd(it){
 function orderText(){
   const f = st.form, lines = [T('o_hdr'), ''];
   st.order.forEach((o, k) => { const x = oitem(o); if (!x) return;
-    lines.push(`${k + 1}. ${x.it.n}${x.it.v.length > 1 && x.v.l ? ' (' + x.v.l + ')' : ''} [${x.it.c}]: ${o.q} × ${x.v.r ? nf(x.v.r) + ' ₴ = ' + nf(x.v.r * o.q) + ' ₴' : T('o_noprice')}`); });
+    lines.push(`${k + 1}. ${NM(x.it)}${x.it.v.length > 1 && x.v.l ? ' (' + x.v.l + ')' : ''} [${x.it.c}]: ${o.q} × ${x.v.r ? nf(x.v.r) + ' ₴ = ' + nf(x.v.r * o.q) + ' ₴' : T('o_noprice')}`); });
   lines.push('', `${T('o_total')}: ${nf(totals().sum)} ₴`, '', `${T('o_name')}: ${f.n}`, `${T('o_phone')}: ${f.p}`);
   if (f.c) lines.push(`${T('o_city')}: ${f.c}`);
   lines.push(`${T('o_pay')}: ${T('pays')[f.pay]}`);
@@ -496,7 +508,7 @@ function drawer(msg){
   if (!t.n) h = `<p class="note">${T('o_empty')}</p>`;
   else {
     h += '<div>' + st.order.map((o, k) => { const x = oitem(o); if (!x) return '';
-      return `<div class="ol"><div class="on">${esc(x.it.n)}</div><div class="qty"><button type="button" data-q="${k}" data-d="-1" aria-label="−">−</button><input type="number" min="1" value="${o.q}" data-qi="${k}" aria-label="${T('qty')}"><button type="button" data-q="${k}" data-d="1" aria-label="+">+</button></div>`
+      return `<div class="ol"><div class="on">${esc(NM(x.it))}</div><div class="qty"><button type="button" data-q="${k}" data-d="-1" aria-label="−">−</button><input type="number" min="1" value="${o.q}" data-qi="${k}" aria-label="${T('qty')}"><button type="button" data-q="${k}" data-d="1" aria-label="+">+</button></div>`
         + `<div class="os">${x.v.r ? nf(x.v.r * o.q) + ' ₴' : '—'}</div><button type="button" class="rm" data-del="${k}" aria-label="×">×</button>`
         + `<div class="om"><code>${esc(x.it.c)}</code>${x.it.v.length > 1 && x.v.l ? ' · ' + esc(x.v.l) : ''} · ${x.v.r ? nf(x.v.r) + ' ₴' : T('o_noprice')}</div></div>`; }).join('') + '</div>';
     h += `<dl class="tot"><dt class="big">${T('o_total')}</dt><dd class="big">${nf(t.sum)} ₴</dd></dl>`;
@@ -534,6 +546,7 @@ const editable = t => t && t.closest && t.closest('input,textarea,select');
 for (const ev of ['copy','cut','contextmenu','dragstart','selectstart']) document.addEventListener(ev, e => { if (!editable(e.target)) e.preventDefault(); });
 document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && ['s','p','u','a','c','x'].includes(e.key.toLowerCase()) && !editable(e.target)) e.preventDefault(); }, true);
 let qT = 0;
+document.addEventListener('change', e => { if (e.target.id === 'sort'){ st.sort = e.target.value; save(); render(); } });
 $('q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { st.q = e.target.value.trim().toLowerCase(); render(); }, 140); });
 document.addEventListener('click', e => {
   const t = e.target, b = t.closest('button');
@@ -571,7 +584,7 @@ addEventListener('scroll', () => { cancelAnimationFrame(spyT); spyT = requestAni
 
 function start(payload){
   DATA = payload.items; META = payload.meta;
-  DATA.forEach((it, i) => { it._i = i; it._h = (it.n + ' ' + it.c + ' ' + (it.a || '') + ' ' + it.v.map(v => v.c || '').join(' ') + ' ' + (it.tags || []).join(' ') + ' ' + it.g + ' ' + (it.g0 || '')).toLowerCase(); });
+  DATA.forEach((it, i) => { it._i = i; it._h = (it.n + ' ' + (it.nr || '') + ' ' + it.c + ' ' + (it.a || '') + ' ' + it.v.map(v => v.c || '').join(' ') + ' ' + (it.tags || []).join(' ') + ' ' + it.g + ' ' + (it.g0 || '')).toLowerCase(); });
   BYCODE = new Map(DATA.map(it => [it.c, it])); SECS = [...new Set(DATA.map(d => d.t))];
   st.order = st.order.filter(o => BYCODE.has(o.c));
   chrome(); render();
