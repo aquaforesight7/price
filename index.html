@@ -614,7 +614,7 @@ const NP = (() => {
   let timer = 0, seq = 0, list = [], idx = -1, box = null, inp = null;
   const call = (model, method, props) => fetch(API, {method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({apiKey:'', modelName:model, calledMethod:method, methodProperties:props})}).then(r => r.json()).then(d => d && d.success ? d.data : []);
-  const ru = () => st.lang === 'ru';
+  const ru = () => false;   // Nova Poshta names always in Ukrainian, whatever the page language or the typed language
   const low = x => (x || '').toLowerCase().replace(/[ʼ’'`]/g, '');
   const TYPE = {'місто':['', ''], 'село':['с.', 'с.'], 'селище міського типу':['смт', 'пгт'], 'селище':['с-ще', 'пос.']};
   function cityLabel(c){
