@@ -182,6 +182,19 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
 .form input,.form select,.form textarea{height:36px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface);font-size:13.5px}
 .form textarea{height:60px;padding:8px 10px;resize:vertical}
 .form .err{border-color:var(--bad)}
+.form .ck{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);cursor:pointer}
+.form .ck input{width:18px;height:18px;margin:0;padding:0;accent-color:var(--accent);flex:none}
+.form .rcp{display:grid;gap:6px;font-size:12px;color:var(--muted)}
+.form .rcp .opts2{display:flex;gap:16px;flex-wrap:wrap}
+.form .rbox{display:grid;gap:8px;padding:10px;border:1px dashed var(--line);border-radius:10px}
+.form .rbox[hidden]{display:none}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.form .ac{position:relative}
+.acl{position:absolute;left:0;right:0;top:100%;z-index:40;margin:3px 0 0;padding:4px;list-style:none;max-height:260px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 28px rgba(11,29,44,.16)}
+.acl li{padding:7px 9px;border-radius:7px;font-size:13px;line-height:1.3;color:var(--ink);cursor:pointer}
+.acl li small{display:block;font-size:11.5px;color:var(--muted)}
+.acl li.on,.acl li:hover{background:var(--soft)}
+.acl li.mut{cursor:default;color:var(--muted);background:none}
 .df{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
 .btn.msg{background:var(--c);border-color:var(--c);color:#fff}
 .copybox{width:100%;height:150px;border:1px solid var(--line);border-radius:10px;padding:8px;font:500 12px/1.4 var(--mono);background:var(--bg)}
@@ -306,11 +319,11 @@ const L = {
   code:'Код',avail:'Наявність',removes:'Прибирає',params:'Параметри',res:'Ресурс',purpose:'Призначення',replace:'Схожі товари',unit1:'1 шт.',
   buy:'Купити на сайті',add:'Додати до списку',added:'У списку',empty:'Нічого не знайдено. Змініть запит або скиньте фільтри.',
   o_empty:'Список порожній. Натискайте «+» біля товарів, які вас цікавлять.',o_total:'Разом',o_noprice:'ціну уточнить менеджер',
-  o_name:'Імʼя',o_phone:'Телефон',o_city:'Місто, відділення Нової пошти',o_pay:'Оплата',o_comment:'Коментар',
-  pays:['Накладений платіж','Оплата на рахунок ФОП','Безготівкова з ПДВ (для юросіб)'],
+  o_name:'Імʼя',o_nc:'Мені не передзвонювати',o_mm:'Звʼязок через месенджер',o_rc:'Отримувач',o_rc0:'Я',o_rc1:'Інша людина',o_rs:'Прізвище отримувача',o_rn:'Імʼя отримувача',o_rp:'Телефон отримувача',o_need_r:'Вкажіть прізвище, імʼя і телефон отримувача',o_sur:'Прізвище',o_phone:'Телефон',o_city:'Місто (Нова пошта)',o_wh:'Відділення або поштомат',o_city_ph:'Почніть вводити назву',o_wh_ph:'Номер або вулиця',o_city_first:'Спершу оберіть місто',o_none:'Не знайдено, залиште як є',o_load:'Шукаємо…',o_pay:'Оплата',o_comment:'Коментар',
+  pays:['Накладений платіж (післяплата)','Оплата на рахунок ФОП','Безготівкова з ПДВ (для юросіб)'],
   o_send:'Надіслати замовлення',o_how:'Натисніть месенджер, яким користуєтесь: відкриється чат з нами і готове замовлення. Якщо текст не з\u02BCявився, натисніть «Вставити» — замовлення вже скопійоване. Менеджер підтвердить наявність і ціну.',
   o_copied:'Відкриваємо чат. Якщо поле повідомлення порожнє, натисніть «Вставити» й надішліть.',o_open:'Відкрити контакти',o_manual:'Скопіюйте текст і надішліть нам:',
-  o_need:'Вкажіть імʼя і телефон',o_viber:'Замовлення скопійоване. На сторінці контактів натисніть Viber, а в чаті — «Вставити» й надішліть.',o_clear:'Очистити',o_hdr:'Замовлення з каталогу Аква Форсайт',
+  o_need:'Вкажіть імʼя, прізвище і телефон',o_viber:'Замовлення скопійоване. На сторінці контактів натисніть Viber, а в чаті — «Вставити» й надішліть.',o_clear:'Очистити',o_hdr:'Замовлення з каталогу Аква Форсайт',
   foot:'Ціни в гривнях, оновлюються щодня. Наявність і підсумкову вартість підтверджує менеджер.',lang_note:'Назви товарів подано українською.'},
  ru:{title:'Каталог и цены',ph:'Название, код или артикул',order:'Мой список',task:'Что убрать из воды',sort:'Сортировка',s_def:'по разделам',s_pu:'цена ↑ дешевле',s_pd:'цена ↓ дороже',s_c:'по коду',s_n:'по названию',contact_s:'Связаться',
   rm:['Жёсткость','Железо','Марганец','Органика, цвет','Аммоний','Нитраты','Сероводород','Хлор','Мутность','Коррекция pH','Соли','Бактерии'],
@@ -321,11 +334,11 @@ const L = {
   buy:'Купить на сайте',add:'Добавить в список',added:'В списке',empty:'Ничего не найдено. Измените запрос или сбросьте фильтры.',
   o_empty:'Список пуст. Нажимайте «+» возле интересующих товаров.',o_total:'Итого',o_noprice:'цену уточнит менеджер',
 
-  o_name:'Имя',o_phone:'Телефон',o_city:'Город, отделение Новой почты',o_pay:'Оплата',o_comment:'Комментарий',
-  pays:['Наложенный платёж','Оплата на счёт ФЛП','Безнал с НДС (для юрлиц)'],
+  o_name:'Имя',o_nc:'Мне не перезванивать',o_mm:'Связь через мессенджер',o_rc:'Получатель',o_rc0:'Я',o_rc1:'Другой человек',o_rs:'Фамилия получателя',o_rn:'Имя получателя',o_rp:'Телефон получателя',o_need_r:'Укажите фамилию, имя и телефон получателя',o_sur:'Фамилия',o_phone:'Телефон',o_city:'Город (Новая почта)',o_wh:'Отделение или почтомат',o_city_ph:'Начните вводить название',o_wh_ph:'Номер или улица',o_city_first:'Сначала выберите город',o_none:'Не найдено, оставьте как есть',o_load:'Ищем…',o_pay:'Оплата',o_comment:'Комментарий',
+  pays:['Наложенный платёж (оплата при получении)','Оплата на счёт ФЛП','Безнал с НДС (для юрлиц)'],
   o_send:'Отправить заказ',o_how:'Нажмите мессенджер, которым пользуетесь: откроется чат с нами и готовый заказ. Если текст не появился, нажмите «Вставить» — заказ уже скопирован. Менеджер подтвердит наличие и цену.',
   o_copied:'Открываем чат. Если поле сообщения пустое, нажмите «Вставить» и отправьте.',o_open:'Открыть контакты',o_manual:'Скопируйте текст и отправьте нам:',
-  o_need:'Укажите имя и телефон',o_viber:'Заказ скопирован. На странице контактов нажмите Viber, а в чате — «Вставить» и отправьте.',o_clear:'Очистить',o_hdr:'Заказ из каталога Аква Форсайт',
+  o_need:'Укажите имя, фамилию и телефон',o_viber:'Заказ скопирован. На странице контактов нажмите Viber, а в чате — «Вставить» и отправьте.',o_clear:'Очистить',o_hdr:'Заказ из каталога Аква Форсайт',
   foot:'Цены в гривнах, обновляются ежедневно. Наличие и итоговую стоимость подтверждает менеджер.',lang_note:'Названия товаров указаны на украинском.'},
  en:{title:'Catalogue and prices',ph:'Name, code or part number',order:'My list',task:'What to remove from water',sort:'Sort',s_def:'by section',s_pu:'price ↑ low first',s_pd:'price ↓ high first',s_c:'by code',s_n:'by name',contact_s:'Contact us',
   rm:['Hardness','Iron','Manganese','Organics, colour','Ammonium','Nitrates','Hydrogen sulfide','Chlorine','Turbidity','pH correction','Dissolved salts','Bacteria'],
@@ -336,15 +349,15 @@ const L = {
   buy:'Buy on our website',add:'Add to list',added:'In list',empty:'Nothing found. Change the search or clear the filters.',
   o_empty:'Your list is empty. Press «+» next to the products you need.',o_total:'Total',o_noprice:'price to be confirmed',
 
-  o_name:'Name',o_phone:'Phone',o_city:'City, Nova Poshta branch',o_pay:'Payment',o_comment:'Comment',
-  pays:['Cash on delivery','Bank transfer','Invoice with VAT (companies)'],
+  o_name:'Name',o_nc:'Please do not call me',o_mm:'Contact me via messenger',o_rc:'Recipient',o_rc0:'Me',o_rc1:'Someone else',o_rs:'Recipient surname',o_rn:'Recipient name',o_rp:'Recipient phone',o_need_r:'Enter the recipient surname, name and phone',o_sur:'Surname',o_phone:'Phone',o_city:'City (Nova Poshta)',o_wh:'Branch or parcel locker',o_city_ph:'Start typing',o_wh_ph:'Number or street',o_city_first:'Choose a city first',o_none:'Not found, keep as typed',o_load:'Searching…',o_pay:'Payment',o_comment:'Comment',
+  pays:['Cash on delivery (pay on receipt)','Bank transfer','Invoice with VAT (companies)'],
   o_send:'Send order',o_how:'Tap the messenger you use: a chat with us opens with your order filled in. If the text is missing, tap Paste: the order is already copied. A manager will confirm availability and price.',
   o_copied:'Opening the chat. If the message box is empty, tap Paste and send.',o_open:'Open contacts',o_manual:'Copy this text and send it to us:',
-  o_need:'Enter your name and phone',o_viber:'Order copied. On the contacts page tap Viber, then Paste in the chat and send.',o_clear:'Clear',o_hdr:'Order from the Aqua Foresight catalogue',
+  o_need:'Enter your name, surname and phone',o_viber:'Order copied. On the contacts page tap Viber, then Paste in the chat and send.',o_clear:'Clear',o_hdr:'Order from the Aqua Foresight catalogue',
   foot:'Prices in hryvnias, updated daily. A manager confirms availability and the final price.',lang_note:'Product names are given in Ukrainian.'}
 };
 const LI = {uk:0, ru:1, en:2};
-const st = {q:'', lang:'uk', compact:false, priced:false, stock:false, rm:new Set(), order:[], form:{n:'',p:'',c:'',pay:0,m:''}, active:null, sort:''};
+const st = {q:'', lang:'uk', compact:false, priced:false, stock:false, rm:new Set(), order:[], form:{n:'',s:'',p:'',c:'',cr:'',w:'',pay:0,m:'',nc:false,mm:false,rc:0,rs:'',rn:'',rp:''}, active:null, sort:''};
 const $ = id => document.getElementById(id);
 const T = k => L[st.lang][k];
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -352,7 +365,7 @@ const nf = n => Math.round(n).toLocaleString('uk-UA');
 const money = p => p ? nf(p) + ' ₴' : '—';
 let saved = null;
 try { saved = JSON.parse(localStorage.getItem('af-catalog') || 'null'); } catch (e) {}
-if (saved) { for (const k of ['compact','order','form']) if (k in saved) st[k] = saved[k]; }
+if (saved) { for (const k of ['compact','order','form']) if (k in saved) st[k] = k === 'form' ? Object.assign(st.form, saved.form) : saved[k]; }
 st.lang = 'uk';
 { const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ru') st.lang = ql; }
 const save = () => { try { localStorage.setItem('af-catalog', JSON.stringify({lang:st.lang, compact:st.compact, sort:st.sort, order:st.order, form:st.form})); } catch (e) {} };
@@ -496,10 +509,14 @@ function orderText(){
   const f = st.form, lines = [T('o_hdr'), ''];
   st.order.forEach((o, k) => { const x = oitem(o); if (!x) return;
     lines.push(`${k + 1}. ${NM(x.it)}${x.it.v.length > 1 && x.v.l ? ' (' + x.v.l + ')' : ''} [${x.it.c}]: ${o.q} × ${x.v.r ? nf(x.v.r) + ' ₴ = ' + nf(x.v.r * o.q) + ' ₴' : T('o_noprice')}`); });
-  lines.push('', `${T('o_total')}: ${nf(totals().sum)} ₴`, '', `${T('o_name')}: ${f.n}`, `${T('o_phone')}: ${f.p}`);
+  lines.push('', `${T('o_total')}: ${nf(totals().sum)} ₴`, '', `${T('o_sur')}: ${f.s || ''}`, `${T('o_name')}: ${f.n}`, `${T('o_phone')}: ${f.p}`);
+  lines.push(`${T('o_rc')}: ${f.rc ? `${f.rs || ''} ${f.rn || ''}, ${f.rp || ''}`.trim() : T('o_rc0')}`);
   if (f.c) lines.push(`${T('o_city')}: ${f.c}`);
+  if (f.w) lines.push(`${T('o_wh')}: ${f.w}`);
   lines.push(`${T('o_pay')}: ${T('pays')[f.pay]}`);
   if (f.m) lines.push(`${T('o_comment')}: ${f.m}`);
+  if (f.nc) lines.push('✔ ' + T('o_nc'));
+  if (f.mm) lines.push('✔ ' + T('o_mm'));
   return lines.join('\n');
 }
 function drawer(msg){
@@ -514,9 +531,14 @@ function drawer(msg){
     h += `<dl class="tot"><dt class="big">${T('o_total')}</dt><dd class="big">${nf(t.sum)} ₴</dd></dl>`;
     if (t.unk) h += `<p class="note">${T('o_noprice')}: ${t.unk}</p>`;
     const f = st.form;
-    h += `<div class="form"><label>${T('o_name')}<input id="f-n" value="${esc(f.n)}" autocomplete="name"></label><label>${T('o_phone')}<input id="f-p" type="tel" value="${esc(f.p)}" autocomplete="tel"></label>`
-      + `<label>${T('o_city')}<input id="f-c" value="${esc(f.c)}"></label><label>${T('o_pay')}<select id="f-pay">${T('pays').map((p, k) => `<option value="${k}"${+f.pay === k ? ' selected' : ''}>${p}</option>`).join('')}</select></label>`
-      + `<label>${T('o_comment')}<textarea id="f-m">${esc(f.m)}</textarea></label></div><p class="note">${T('o_how')}</p>`;
+    h += `<div class="form"><div class="two"><label>${T('o_name')}<input id="f-n" value="${esc(f.n)}" autocomplete="given-name"></label><label>${T('o_sur')}<input id="f-s" value="${esc(f.s || '')}" autocomplete="family-name"></label></div><label>${T('o_phone')}<input id="f-p" type="tel" value="${esc(f.p)}" autocomplete="tel"></label>`
+      + `<div class="rcp" role="radiogroup" aria-label="${T('o_rc')}">${T('o_rc')}<div class="opts2">${[0, 1].map(k => `<label class="ck"><input type="radio" name="f-rc" value="${k}"${+(f.rc || 0) === k ? ' checked' : ''}>${T('o_rc' + k)}</label>`).join('')}</div></div>`
+      + `<div class="rbox" id="f-rbox"${f.rc ? '' : ' hidden'}><div class="two"><label>${T('o_rn')}<input id="f-rn" value="${esc(f.rn || '')}" autocomplete="off"></label><label>${T('o_rs')}<input id="f-rs" value="${esc(f.rs || '')}" autocomplete="off"></label></div><label>${T('o_rp')}<input id="f-rp" type="tel" value="${esc(f.rp || '')}" autocomplete="off"></label></div>`
+      + `<label class="ac">${T('o_city')}<input id="f-c" value="${esc(f.c)}" placeholder="${T('o_city_ph')}" autocomplete="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" role="combobox" aria-autocomplete="list" aria-expanded="false"></label>`
+      + `<label class="ac">${T('o_wh')}<input id="f-w" value="${esc(f.w || '')}" placeholder="${T('o_wh_ph')}" autocomplete="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" role="combobox" aria-autocomplete="list" aria-expanded="false"></label>`
+      + `<label><label>${T('o_pay')}<select id="f-pay">${T('pays').map((p, k) => `<option value="${k}"${+f.pay === k ? ' selected' : ''}>${p}</option>`).join('')}</select></label>`
+      + `<label>${T('o_comment')}<textarea id="f-m">${esc(f.m)}</textarea></label>`
+      + `<label class="ck"><input type="checkbox" id="f-nc"${f.nc ? ' checked' : ''}>${T('o_nc')}</label><label class="ck"><input type="checkbox" id="f-mm"${f.mm ? ' checked' : ''}>${T('o_mm')}</label></div><p class="note">${T('o_how')}</p>`;
     if (msg) h += msg;
   }
   $('dbody').innerHTML = h;
@@ -525,9 +547,12 @@ function drawer(msg){
 }
 function openDrawer(on){ $('drawer').hidden = !on; $('scrim').hidden = !on; if (on) drawer(); }
 async function send(kind){
-  if (!st.form.n.trim() || st.form.p.replace(/\D/g, '').length < 9){
-    drawer(`<p class="note" style="color:var(--bad)">${T('o_need')}</p>`);
-    for (const id of ['f-n', 'f-p']) { const el = $(id); if (el && (id === 'f-n' ? !st.form.n.trim() : st.form.p.replace(/\D/g, '').length < 9)) el.classList.add('err'); }
+  const F = st.form, bad = {'f-n': !F.n.trim(), 'f-s': !(F.s || '').trim(), 'f-p': F.p.replace(/\D/g, '').length < 9};
+  const badR = F.rc ? {'f-rn': !(F.rn || '').trim(), 'f-rs': !(F.rs || '').trim(), 'f-rp': (F.rp || '').replace(/\D/g, '').length < 9} : {};
+  if (Object.values(bad).some(Boolean) || Object.values(badR).some(Boolean)){
+    Object.assign(bad, badR);
+    drawer(`<p class="note" style="color:var(--bad)">${Object.values(badR).some(Boolean) && !Object.entries(bad).some(([k, v]) => v && !(k in badR)) ? T('o_need_r') : T('o_need')}</p>`);
+    for (const id in bad) { const el = $(id); if (el && bad[id]) el.classList.add('err'); }
     return;
   }
   const text = orderText();
@@ -571,8 +596,9 @@ document.addEventListener('click', e => {
   else if (d.msg) send(d.msg);
 });
 document.addEventListener('input', e => {
-  const id = e.target.id, map = {'f-n':'n', 'f-p':'p', 'f-c':'c', 'f-pay':'pay', 'f-m':'m'};
-  if (map[id]){ st.form[map[id]] = id === 'f-pay' ? +e.target.value : e.target.value; e.target.classList.remove('err'); save(); }
+  const id = e.target.id, map = {'f-n':'n', 'f-s':'s', 'f-nc':'nc', 'f-mm':'mm', 'f-rs':'rs', 'f-rn':'rn', 'f-rp':'rp', 'f-p':'p', 'f-c':'c', 'f-w':'w', 'f-pay':'pay', 'f-m':'m'};
+  if (e.target.name === 'f-rc'){ st.form.rc = +e.target.value; const r = $('f-rbox'); if (r) r.hidden = !st.form.rc; save(); return; }
+  if (map[id]){ st.form[map[id]] = id === 'f-pay' ? +e.target.value : e.target.type === 'checkbox' ? e.target.checked : e.target.value; if (id === 'f-c') st.form.cr = ''; e.target.classList.remove('err'); save(); if (id === 'f-c' || id === 'f-w') NP.input(e.target); }
 });
 document.addEventListener('change', e => {
   const t = e.target;
@@ -581,6 +607,78 @@ document.addEventListener('change', e => {
 $('list').addEventListener('toggle', e => { const d = e.target; if (d.open && d.id){ const box = d.querySelector('.more'); if (!box.firstChild) box.innerHTML = details(DATA[+d.id.slice(1)]); } }, true);
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('drawer').hidden) openDrawer(false); });
 addEventListener('scroll', () => { cancelAnimationFrame(spyT); spyT = requestAnimationFrame(spy); }, {passive:true});
+
+/* Nova Poshta: city and branch suggestions (public API, no key); free text always allowed */
+const NP = (() => {
+  const API = 'https://api.novaposhta.ua/v2.0/json/';
+  let timer = 0, seq = 0, list = [], idx = -1, box = null, inp = null;
+  const call = (model, method, props) => fetch(API, {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({apiKey:'', modelName:model, calledMethod:method, methodProperties:props})}).then(r => r.json()).then(d => d && d.success ? d.data : []);
+  const ru = () => st.lang === 'ru';
+  const low = x => (x || '').toLowerCase().replace(/[ʼ’'`]/g, '');
+  const TYPE = {'місто':['', ''], 'село':['с.', 'с.'], 'селище міського типу':['смт', 'пгт'], 'селище':['с-ще', 'пос.']};
+  function cityLabel(c){
+    const nm = ru() ? (c.DescriptionRu || c.Description) : c.Description;
+    const ty = (TYPE[c.SettlementTypeDescription] || ['', ''])[ru() ? 1 : 0];
+    const ar = ru() ? (c.AreaDescriptionRu || c.AreaDescription) : c.AreaDescription;
+    return {t: (ty ? ty + ' ' : '') + nm, s: ar && !nm.includes(ar) ? ar + ' обл.' : ''};
+  }
+  async function cities(q){
+    const d = await call('AddressGeneral', 'getCities', {FindByString:q, Limit:'60'});
+    const L = low(q);
+    const rank = c => { const a = low(c.Description), b = low(c.DescriptionRu);
+      return [(a === L || b === L) ? 0 : 1, c.SettlementTypeDescription === 'місто' ? 0 : 1, (a.startsWith(L) || b.startsWith(L)) ? 0 : 1, +c.CityID || 1e9]; };
+    const cmp = (x, y) => { const p = rank(x), r = rank(y); for (let k = 0; k < p.length; k++) if (p[k] !== r[k]) return p[k] - r[k]; return 0; };
+    return d.sort(cmp).slice(0, 12).map(c => { const l = cityLabel(c); return {t:l.t, s:l.s, v:l.t + (l.s ? ', ' + l.s : ''), ref:c.Ref}; });
+  }
+  async function branches(q){
+    const num = (q.match(/^\D*(\d+)\D*$/) || [])[1];
+    const props = {CityRef:st.form.cr, Limit: num ? '60' : '30', Page:'1'};
+    if (num) props.FindByString = '№' + num; else if (q) props.FindByString = q;
+    let d = await call('AddressGeneral', 'getWarehouses', props);
+    if (num) d.sort((x, y) => (x.Number === num ? 0 : 1) - (y.Number === num ? 0 : 1) || (+x.Number - +y.Number));
+    return d.slice(0, 30).map(w => { const full = ru() ? (w.DescriptionRu || w.Description) : w.Description; const m = full.split(/:\s*/);
+      return {t: m[0], s: m.slice(1).join(': '), v: full}; });
+  }
+  function close(){ if (box) box.remove(); box = null; list = []; idx = -1; if (inp) inp.setAttribute('aria-expanded', 'false'); }
+  function show(el, items, note){
+    close(); inp = el;
+    if (!items.length && !note) return;
+    box = document.createElement('ul'); box.className = 'acl'; box.setAttribute('role', 'listbox');
+    box.innerHTML = items.length ? items.map((x, k) => `<li role="option" data-k="${k}">${esc(x.t)}${x.s ? `<small>${esc(x.s)}</small>` : ''}</li>`).join('') : `<li class="mut">${esc(note)}</li>`;
+    list = items; el.parentNode.appendChild(box); el.setAttribute('aria-expanded', 'true');
+    box.addEventListener('mousedown', e => { const li = e.target.closest('li[data-k]'); if (li){ e.preventDefault(); pick(+li.dataset.k); } });
+  }
+  function hi(k){ if (!box) return; idx = k; box.querySelectorAll('li').forEach((li, j) => li.classList.toggle('on', j === k)); box.children[k]?.scrollIntoView({block:'nearest'}); }
+  function pick(k){
+    const x = list[k], el = inp; if (!x || !el) return;
+    el.value = x.v;
+    if (el.id === 'f-c'){ st.form.c = x.v; st.form.cr = x.ref; st.form.w = ''; const w = $('f-w'); if (w){ w.value = ''; close(); save(); w.focus(); run(w); return; } }
+    else st.form.w = x.v;
+    save(); close();
+  }
+  function run(el){
+    const q = el.value.trim(), my = ++seq;
+    if (el.id === 'f-c'){
+      if (q.length < 2) return close();
+      show(el, [], T('o_load'));
+      cities(q).then(r => { if (my === seq && document.activeElement === el) show(el, r, T('o_none')); }).catch(close);
+    } else {
+      if (!st.form.cr){ show(el, [], T('o_city_first')); return; }
+      branches(q).then(r => { if (my === seq && document.activeElement === el) show(el, r, T('o_none')); }).catch(close);
+    }
+  }
+  document.addEventListener('focusin', e => { const t = e.target; if (t.id === 'f-w' || (t.id === 'f-c' && t.value.trim().length >= 2 && !st.form.cr)) run(t); });
+  document.addEventListener('focusout', e => { if (e.target === inp) setTimeout(() => { if (document.activeElement !== inp) close(); }, 120); });
+  document.addEventListener('keydown', e => {
+    if (!box || e.target !== inp || !list.length){ if (e.key === 'Escape' && box){ e.stopPropagation(); close(); } return; }
+    if (e.key === 'ArrowDown'){ e.preventDefault(); hi(Math.min(list.length - 1, idx + 1)); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); hi(Math.max(0, idx - 1)); }
+    else if (e.key === 'Enter' && idx >= 0){ e.preventDefault(); pick(idx); }
+    else if (e.key === 'Escape'){ e.stopPropagation(); close(); }
+  }, true);
+  return {input(el){ clearTimeout(timer); timer = setTimeout(() => run(el), 220); }};
+})();
 
 function start(payload){
   DATA = payload.items; META = payload.meta;
