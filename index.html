@@ -245,7 +245,7 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
 <header class="top">
   <a class="brand" href="https://aquaforesight.com.ua/ua/" target="_blank" rel="noopener"><i></i>Аква Форсайт</a>
   <label class="search"><input id="q" type="search" autocomplete="off"></label>
-  <div class="seg" role="group" data-seg="lang"><button type="button" data-lang="uk" aria-pressed="true">UA</button><button type="button" data-lang="ru" aria-pressed="false">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+  <div class="seg" role="group" data-seg="lang"><button type="button" data-lang="uk" aria-pressed="true">UA</button><button type="button" data-lang="ru" aria-pressed="false">RU</button></div>
   <a class="call" href="https://piclink.me/aquaforesight" target="_blank" rel="noopener" data-t="contact_s"></a>
   <button type="button" class="cart idle" id="cart"></button>
 </header>
@@ -256,7 +256,7 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
     <button type="button" class="secbtn" id="secbtn"></button>
     <section class="tools">
       <div class="headline"><h1 data-t="title"></h1><span id="stats"></span></div>
-      <div class="opts mob" hidden><div class="seg" role="group" data-seg="lang"><button type="button" data-lang="uk" aria-pressed="true">UA</button><button type="button" data-lang="ru" aria-pressed="false">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div></div>
+      <div class="opts mob" hidden><div class="seg" role="group" data-seg="lang"><button type="button" data-lang="uk" aria-pressed="true">UA</button><button type="button" data-lang="ru" aria-pressed="false">RU</button></div></div>
       <div>
         <div class="lbl" data-t="task"></div>
         <button type="button" class="rmbtn" id="rmbtn" aria-expanded="false"></button>
@@ -354,7 +354,7 @@ let saved = null;
 try { saved = JSON.parse(localStorage.getItem('af-catalog') || 'null'); } catch (e) {}
 if (saved) { for (const k of ['compact','order','form']) if (k in saved) st[k] = saved[k]; }
 st.lang = 'uk';
-{ const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ru' || ql === 'en') st.lang = ql; }
+{ const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ru') st.lang = ql; }
 const save = () => { try { localStorage.setItem('af-catalog', JSON.stringify({lang:st.lang, compact:st.compact, sort:st.sort, order:st.order, form:st.form})); } catch (e) {} };
 
 let DATA = [], META = {}, BYCODE = new Map(), SECS = [];
