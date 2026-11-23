@@ -81,7 +81,7 @@ img,.ph{-webkit-user-drag:none;pointer-events:auto}
 #hint{font-size:12.5px;color:var(--muted);min-height:18px}
 #hint button{border:0;background:none;padding:0;color:var(--accent);font-weight:600}
 
-.sech{display:flex;align-items:baseline;gap:10px;margin:22px 0 2px;scroll-margin-top:calc(var(--top) + 10px)}
+.sech{position:relative;z-index:6;background:var(--bg);display:flex;align-items:baseline;gap:10px;margin:22px 0 2px;padding:6px 0 8px;scroll-margin-top:calc(var(--top) + 10px)}
 .sech h2{margin:0;font-weight:700;font-size:19px;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
 .sech span{font-size:12.5px;color:var(--muted)}
 .grph{position:sticky;top:var(--top);z-index:5;display:flex;justify-content:space-between;gap:12px;margin:10px 0 5px;padding:7px 2px 5px;background:var(--bg);
@@ -199,7 +199,6 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
   .search{grid-column:1 / -1;grid-row:2}
   .top .seg{display:none}
   .opts.mob{display:flex !important}
-  .rmgrid,.chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
   .rmgrid button,.chip2,.sep{flex:none}
   #hint:not(.f){display:none}
   .tools h1{font-size:22px}
@@ -215,6 +214,30 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
   .cart b.cn{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--accent-ink);color:var(--accent);font-size:12px}
 }
 @media (max-width: 360px){ .cart .cl{display:none} .cart::before{content:"🛒";font-size:15px} }
+.secbtn,.rmbtn{display:none}
+.sheet,.sheetbg{display:none}
+@media (max-width: 760px){
+  .rail{display:none !important}
+  .grph{top:calc(var(--top) + 52px)} .sech{scroll-margin-top:calc(var(--top) + 62px)} .grph{scroll-margin-top:calc(var(--top) + 52px)}
+  .secbtn{display:flex;align-items:center;gap:8px;position:sticky;top:var(--top);z-index:5;width:100%;height:44px;margin:0 0 10px;padding:0 14px;border:1px solid var(--accent);border-radius:12px;background:var(--surface);color:var(--ink);font-weight:600;font-size:15px;text-align:left;box-shadow:0 0 0 8px var(--bg)}
+  .secbtn span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .secbtn small{color:var(--muted);font-weight:500;font-size:13px}
+  .secbtn::before{content:"☰";color:var(--accent)} .secbtn::after{content:"▾";color:var(--muted)}
+  .tools>div>.lbl{display:none}
+  .rmbtn{display:flex;align-items:center;gap:8px;width:100%;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-weight:600;font-size:15px;text-align:left}
+  .rmbtn span{flex:1} .rmbtn b{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px}
+  .rmbtn::before{content:"💧"} .rmbtn::after{content:"▾";color:var(--muted)} .rmbtn[aria-expanded="true"]::after{content:"▴"}
+  .rmgrid{display:none !important}
+  .rmgrid.open{display:flex !important;flex-wrap:wrap !important;overflow:visible !important;margin-top:8px;padding:0}
+  .chips{flex-wrap:wrap !important;overflow:visible !important}
+  .sheetbg:not([hidden]){display:block;position:fixed;inset:0;z-index:60;background:rgb(0 0 0 / .45)}
+  .sheet:not([hidden]){display:flex;flex-direction:column;position:fixed;left:0;right:0;bottom:0;z-index:61;max-height:80vh;background:var(--surface);border-radius:16px 16px 0 0;box-shadow:0 -10px 30px rgb(0 0 0 / .25)}
+  .sheeth{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);font-size:17px}
+  #sheetl{overflow-y:auto;padding:6px 8px 20px}
+  #sheetl button{display:flex;justify-content:space-between;gap:10px;width:100%;padding:12px 10px;border:0;border-bottom:1px solid var(--line);background:none;font-size:15.5px;text-align:left;color:var(--ink)}
+  #sheetl button span:last-child{color:var(--muted);font-size:13px}
+  #sheetl button.on{color:var(--accent);font-weight:700}
+}
 </style>
 </head>
 <body>
@@ -229,11 +252,13 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
 <div class="wrap">
   <nav class="rail" id="rail"></nav>
   <main>
+    <button type="button" class="secbtn" id="secbtn"></button>
     <section class="tools">
       <div class="headline"><h1 data-t="title"></h1><span id="stats"></span></div>
       <div class="opts mob" hidden><div class="seg" role="group" data-seg="lang"><button type="button" data-lang="uk" aria-pressed="true">UA</button><button type="button" data-lang="ru" aria-pressed="false">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div></div>
       <div>
         <div class="lbl" data-t="task"></div>
+        <button type="button" class="rmbtn" id="rmbtn" aria-expanded="false"></button>
         <div class="rmgrid" id="rm"></div>
       </div>
       <div class="chips" id="chips"></div>
@@ -243,6 +268,8 @@ body.compact .add{width:24px;height:24px;border-radius:6px;font-size:14px}
     <p class="foot" id="foot"></p>
   </main>
 </div>
+<div class="sheetbg" id="sheetbg" hidden></div>
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true"><div class="sheeth"><b data-t="sections"></b><button type="button" class="x" id="sheetx" aria-label="×">×</button></div><div id="sheetl"></div></div>
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-labelledby="dtitle">
@@ -410,11 +437,16 @@ function rail(){
     }
   }
   $('rail').innerHTML = h;
+  const cs = SECS.filter(x => shown.some(d => d.t === x)), cur = st.active ?? cs[0];
+  $('secbtn').innerHTML = cs.length ? `<span>${T('sections')}: ${esc(secTitle(cur))}</span>` : `<span>${T('sections')}</span>`;
+  $('sheetl').innerHTML = cs.map(x => `<button type="button" class="${x === cur ? 'on' : ''}" data-to="s${x}" data-sh="1"><span>${esc(secTitle(x))}</span><span>${shown.filter(d => d.t === x).length}</span></button>`).join('');
 }
+function sheet(o){ $('sheet').hidden = $('sheetbg').hidden = !o; document.body.style.overflow = o ? 'hidden' : ''; }
+function rmBtn(){ const n = st.rm.size; $('rmbtn').innerHTML = `<span>${T('task')}</span>${n ? `<b>${n}</b>` : ''}`; }
 let spyT = 0;
 function spy(){
   const heads = document.querySelectorAll('.sech'); let cur = null;
-  for (const el of heads){ if (el.getBoundingClientRect().top < 160) cur = +el.dataset.s; else break; }
+  for (const el of heads){ if (el.getBoundingClientRect().top < (innerWidth <= 760 ? 220 : 160)) cur = +el.dataset.s; else break; }
   if (cur == null && heads.length) cur = +heads[0].dataset.s;
   if (cur !== st.active){ st.active = cur; rail(); }
 }
@@ -425,7 +457,7 @@ function chrome(){
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = T(el.dataset.t));
   $('q').placeholder = T('ph'); $('q').setAttribute('aria-label', T('ph'));
   document.querySelectorAll('[data-seg="lang"] button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === st.lang));
-  $('rm').innerHTML = T('rm').map((n, k) => `<button type="button" data-rm="${k}" aria-pressed="${st.rm.has(k)}" style="--h:${RM[k]}">${n}</button>`).join('');
+  $('rm').innerHTML = T('rm').map((n, k) => `<button type="button" data-rm="${k}" aria-pressed="${st.rm.has(k)}" style="--h:${RM[k]}">${n}</button>`).join(''); rmBtn();
   $('chips').innerHTML = `<button type="button" class="chip2" data-f="stock" aria-pressed="${st.stock}">${T('f_stock')}</button><button type="button" class="chip2" data-f="priced" aria-pressed="${st.priced}">${T('f_priced')}</button>`
     + `<span class="sep"></span><button type="button" class="chip2" data-f="compact" aria-pressed="${st.compact}">${T('compact')}</button>`;
   $('foot').innerHTML = `${T('foot')}${st.lang !== 'uk' ? ' ' + T('lang_note') : ''} Аква Форсайт: ${PHONE} · <a href="${LINK}" target="_blank" rel="noopener">${T('contact_s')}</a> · <a href="https://aquaforesight.com.ua/${st.lang === 'uk' ? 'ua/' : ''}" target="_blank" rel="noopener">aquaforesight.com.ua</a>`;
@@ -505,14 +537,17 @@ let qT = 0;
 $('q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { st.q = e.target.value.trim().toLowerCase(); render(); }, 140); });
 document.addEventListener('click', e => {
   const t = e.target, b = t.closest('button');
-  if (!b){ if (t.id === 'scrim') openDrawer(false); return; }
+  if (!b){ if (t.id === 'scrim') openDrawer(false); if (t.id === 'sheetbg') sheet(false); return; }
   const d = b.dataset;
   if ('add' in d){ e.preventDefault(); e.stopPropagation(); addToOrder(+d.add, d.v); return; }
   if (d.lang){ st.lang = d.lang; save(); chrome(); render(); }
-  else if (d.rm){ const k = +d.rm; st.rm.has(k) ? st.rm.delete(k) : st.rm.add(k); b.setAttribute('aria-pressed', st.rm.has(k)); render(); }
+  else if (d.rm){ const k = +d.rm; st.rm.has(k) ? st.rm.delete(k) : st.rm.add(k); b.setAttribute('aria-pressed', st.rm.has(k)); rmBtn(); render(); }
+  else if (b.id === 'secbtn') sheet(true);
+  else if (b.id === 'sheetx') sheet(false);
+  else if (b.id === 'rmbtn'){ const o = !$('rm').classList.contains('open'); $('rm').classList.toggle('open', o); b.setAttribute('aria-expanded', o); }
   else if (d.f){ st[d.f] = !st[d.f]; save(); chrome(); if (d.f !== 'compact') render(); }
-  else if (b.id === 'reset'){ st.q = ''; $('q').value = ''; st.rm.clear(); st.priced = st.stock = false; chrome(); render(); }
-  else if (d.to){ document.getElementById(d.to)?.scrollIntoView({block:'start'}); }
+  else if (b.id === 'reset'){ st.q = ''; $('q').value = ''; st.rm.clear(); rmBtn(); st.priced = st.stock = false; chrome(); render(); }
+  else if (d.to){ const el = document.getElementById(d.to); if (d.sh){ sheet(false); setTimeout(() => { if (!el) return; const h = el.querySelector('.sech') || el; const off = document.querySelector('.top').offsetHeight + $('secbtn').offsetHeight + 16; scrollTo({top: h.getBoundingClientRect().top + scrollY - off, behavior:'instant'}); }, 30); } else el?.scrollIntoView({block:'start'}); }
   else if (d.go){ const it = DATA[+d.go]; st.q = ''; $('q').value = ''; st.rm.clear(); st.priced = st.stock = false; chrome(); render();
     const el = document.getElementById('i' + it._i); if (el){ el.open = true; el.scrollIntoView({block:'center'}); } }
   else if (b.id === 'cart') openDrawer(true);
