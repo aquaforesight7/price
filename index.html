@@ -517,7 +517,6 @@ function orderText(){
   if (+f.pay && (f.ed || '').trim()) lines.push(`${T('o_ed')}: ${f.ed.trim()}`);
   if (f.m) lines.push(`${T('o_comment')}: ${f.m}`);
   if (f.nc) lines.push('✔ ' + T('o_nc'));
-  if (f.mm) lines.push('✔ ' + T('o_mm'));
   return lines.join('\n');
 }
 function edLabel(){ return T('o_ed') + (+st.form.pay === 1 ? ` (${T('o_opt')})` : ''); }
@@ -542,7 +541,7 @@ function drawer(msg){
       + `<label><label>${T('o_pay')}<select id="f-pay">${T('pays').map((p, k) => `<option value="${k}"${+f.pay === k ? ' selected' : ''}>${p}</option>`).join('')}</select></label>`
       + `<label id="f-edbox"${+f.pay ? '' : ' hidden'}><span id="f-edl">${edLabel()}</span><input id="f-ed" value="${esc(f.ed || '')}" autocomplete="off"></label>`
       + `<label>${T('o_comment')}<textarea id="f-m">${esc(f.m)}</textarea></label>`
-      + `<label class="ck"><input type="checkbox" id="f-nc"${f.nc ? ' checked' : ''}>${T('o_nc')}</label><label class="ck"><input type="checkbox" id="f-mm"${f.mm ? ' checked' : ''}>${T('o_mm')}</label></div><p class="note">${T('o_how')}</p>`;
+      + `<label class="ck"><input type="checkbox" id="f-nc"${f.nc ? ' checked' : ''}>${T('o_nc')}</label></div><p class="note">${T('o_how')}</p>`;
     if (msg) h += msg;
   }
   $('dbody').innerHTML = h;
