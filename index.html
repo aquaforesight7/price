@@ -270,7 +270,6 @@ const L = {
   code:'Код',avail:'Наявність',removes:'Прибирає',params:'Параметри',res:'Ресурс',purpose:'Призначення',replace:'Схожі товари',unit1:'1 шт.',
   buy:'Купити на сайті',add:'Додати до списку',added:'У списку',empty:'Нічого не знайдено. Змініть запит або скиньте фільтри.',
   o_empty:'Список порожній. Натискайте «+» біля товарів, які вас цікавлять.',o_total:'Разом',o_noprice:'ціну уточнить менеджер',
-  o_free:'Від 5 000 ₴ доставку Новою поштою оплачуємо ми.',o_tofree:'До безкоштовної доставки бракує',
   o_name:'Імʼя',o_phone:'Телефон',o_city:'Місто, відділення Нової пошти',o_pay:'Оплата',o_comment:'Коментар',
   pays:['Накладений платіж','Оплата на рахунок ФОП','Безготівкова з ПДВ (для юросіб)'],
   o_send:'Надіслати замовлення',o_how:'Натисніть месенджер, яким користуєтесь: відкриється чат з нами і готове замовлення. Якщо текст не з\u02BCявився, натисніть «Вставити» — замовлення вже скопійоване. Менеджер підтвердить наявність і ціну.',
@@ -285,7 +284,7 @@ const L = {
   code:'Код',avail:'Наличие',removes:'Убирает',params:'Параметры',res:'Ресурс',purpose:'Назначение',replace:'Похожие товары',unit1:'1 шт.',
   buy:'Купить на сайте',add:'Добавить в список',added:'В списке',empty:'Ничего не найдено. Измените запрос или сбросьте фильтры.',
   o_empty:'Список пуст. Нажимайте «+» возле интересующих товаров.',o_total:'Итого',o_noprice:'цену уточнит менеджер',
-  o_free:'От 5 000 ₴ доставку Новой почтой оплачиваем мы.',o_tofree:'До бесплатной доставки не хватает',
+
   o_name:'Имя',o_phone:'Телефон',o_city:'Город, отделение Новой почты',o_pay:'Оплата',o_comment:'Комментарий',
   pays:['Наложенный платёж','Оплата на счёт ФЛП','Безнал с НДС (для юрлиц)'],
   o_send:'Отправить заказ',o_how:'Нажмите мессенджер, которым пользуетесь: откроется чат с нами и готовый заказ. Если текст не появился, нажмите «Вставить» — заказ уже скопирован. Менеджер подтвердит наличие и цену.',
@@ -300,7 +299,7 @@ const L = {
   code:'Code',avail:'Availability',removes:'Removes',params:'Specs',res:'Capacity',purpose:'Purpose',replace:'Similar products',unit1:'1 pc',
   buy:'Buy on our website',add:'Add to list',added:'In list',empty:'Nothing found. Change the search or clear the filters.',
   o_empty:'Your list is empty. Press «+» next to the products you need.',o_total:'Total',o_noprice:'price to be confirmed',
-  o_free:'Delivery by Nova Poshta is free from 5,000 ₴.',o_tofree:'Free delivery from 5,000 ₴, add',
+
   o_name:'Name',o_phone:'Phone',o_city:'City, Nova Poshta branch',o_pay:'Payment',o_comment:'Comment',
   pays:['Cash on delivery','Bank transfer','Invoice with VAT (companies)'],
   o_send:'Send order',o_how:'Tap the messenger you use: a chat with us opens with your order filled in. If the text is missing, tap Paste: the order is already copied. A manager will confirm availability and price.',
@@ -462,7 +461,6 @@ function drawer(msg){
         + `<div class="om"><code>${esc(x.it.c)}</code>${x.it.v.length > 1 && x.v.l ? ' · ' + esc(x.v.l) : ''} · ${x.v.r ? nf(x.v.r) + ' ₴' : T('o_noprice')}</div></div>`; }).join('') + '</div>';
     h += `<dl class="tot"><dt class="big">${T('o_total')}</dt><dd class="big">${nf(t.sum)} ₴</dd></dl>`;
     if (t.unk) h += `<p class="note">${T('o_noprice')}: ${t.unk}</p>`;
-    h += `<p class="note">${t.sum >= 5000 ? T('o_free') : `${T('o_tofree')} ${nf(5000 - t.sum)} ₴.`}</p>`;
     const f = st.form;
     h += `<div class="form"><label>${T('o_name')}<input id="f-n" value="${esc(f.n)}" autocomplete="name"></label><label>${T('o_phone')}<input id="f-p" type="tel" value="${esc(f.p)}" autocomplete="tel"></label>`
       + `<label>${T('o_city')}<input id="f-c" value="${esc(f.c)}"></label><label>${T('o_pay')}<select id="f-pay">${T('pays').map((p, k) => `<option value="${k}"${+f.pay === k ? ' selected' : ''}>${p}</option>`).join('')}</select></label>`
